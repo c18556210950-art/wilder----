@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="维尔德 Wilder 的个人博客 — 龙与地下城主题，探索代码与奇幻世界的交汇。">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>维尔德 · Wilder — 冒险者的手记</title>
+
+    <!-- Favicon: d20 SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,1 30,9 30,23 16,31 2,23 2,9' fill='none' stroke='%23c9a84c' stroke-width='1.5'/%3E%3Ctext x='16' y='20' text-anchor='middle' fill='%23c9a84c' font-size='12' font-family='serif'%3E20%3C/text%3E%3C/svg%3E">
+
+    <!-- Google Fonts: Cinzel for headings, Crimson Text for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- ===== Particle Canvas Background ===== -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- ===== Main Container ===== -->
+    <div class="container">
+
+        <!-- ========== SECTION 1: HERO ========== -->
+        <header class="hero" id="hero">
+            <div class="hero__avatar-wrapper">
+                <img
+                    class="hero__avatar"
+                    src="assets/images/avatar.jpg"
+                    alt="维尔德的头像 — 站长肖像"
+                    width="180"
+                    height="180"
+                >
+                <div class="hero__avatar-glow" aria-hidden="true"></div>
+            </div>
+
+            <h1 class="hero__name">维尔德</h1>
+            <p class="hero__subtitle">Wilder</p>
+            <p class="hero__title">
+                <span class="hero__title-icon" aria-hidden="true">⚔️</span>
+                流浪法师 · 代码与骰子的旅人
+                <span class="hero__title-icon" aria-hidden="true">⚔️</span>
+            </p>
+            <p class="hero__motto">
+                "在代码的迷宫中探索，在奇幻的世界里冒险。"
+            </p>
+
+            <!-- Decorative d20 icon -->
+            <svg class="hero__d20" viewBox="0 0 60 60" aria-hidden="true">
+                <polygon points="30,4 54,20 54,40 30,56 6,40 6,20"
+                    fill="none" stroke="currentColor" stroke-width="1.2"/>
+                <polygon points="30,4 30,56 6,40" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+                <polygon points="30,4 30,56 54,40" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+                <polygon points="30,4 54,20 6,20" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+                <text x="30" y="36" text-anchor="middle" fill="currentColor" font-size="16" font-family="serif" font-weight="bold">20</text>
+            </svg>
+        </header>
+
+        <!-- ========== SECTION 2: NAVIGATION ========== -->
+        <nav class="nav glass-nav" id="main-nav" aria-label="主导航">
+            <a href="#about" class="nav__link" data-section="about">
+                <span class="nav__zh">关于</span>
+                <span class="nav__en">About</span>
+            </a>
+            <a href="#blog" class="nav__link" data-section="blog">
+                <span class="nav__zh">手记</span>
+                <span class="nav__en">Blog</span>
+            </a>
+            <a href="#projects" class="nav__link" data-section="projects">
+                <span class="nav__zh">征程</span>
+                <span class="nav__en">Quests</span>
+            </a>
+            <a href="#dice" class="nav__link" data-section="dice">
+                <span class="nav__zh">掷骰</span>
+                <span class="nav__en">Roll</span>
+            </a>
+            <a href="#social" class="nav__link" data-section="social">
+                <span class="nav__zh">公会</span>
+                <span class="nav__en">Links</span>
+            </a>
+        </nav>
+
+        <!-- ========== SECTION 3: ABOUT ========== -->
+        <section class="section" id="about">
+            <h2 class="section__heading reveal">
+                <span class="section__ornament" aria-hidden="true">◆</span>
+                关于这位冒险者
+                <span class="section__ornament" aria-hidden="true">◆</span>
+            </h2>
+
+            <div class="about-card glass-card reveal">
+                <div class="about-card__sheet">
+                    <!-- Character stats block -->
+                    <div class="stats-block">
+                        <div class="stats-block__header">
+                            <span class="stats-block__label">角色卡</span>
+                            <span class="stats-block__sub">Character Sheet</span>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat">
+                                <span class="stat__abbr">STR</span>
+                                <span class="stat__value">12</span>
+                                <span class="stat__mod">+1</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat__abbr">DEX</span>
+                                <span class="stat__value">15</span>
+                                <span class="stat__mod">+2</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat__abbr">CON</span>
+                                <span class="stat__value">14</span>
+                                <span class="stat__mod">+2</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat__abbr">INT</span>
+                                <span class="stat__value">18</span>
+                                <span class="stat__mod">+4</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat__abbr">WIS</span>
+                                <span class="stat__value">16</span>
+                                <span class="stat__mod">+3</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat__abbr">CHA</span>
+                                <span class="stat__value">13</span>
+                                <span class="stat__mod">+1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bio -->
+                    <div class="about-card__bio">
+                        <p>
+                            你好，旅行者！我是<strong>维尔德 (Wilder)</strong>——一个穿梭于代码与奇幻世界之间的流浪法师。
+                        </p>
+                        <p>
+                            白天，我是前端开发者，用 HTML、CSS 和 JavaScript 编织现代网页的咒语。
+                            夜晚，我翻开龙与地下城的规则书，与朋友们一起在幻想大陆上展开史诗般的冒险。
+                        </p>
+                        <p>
+                            这个博客记录了我的技术探索、D&D 跑团故事，以及那些在屏幕与骰子之间闪耀的灵感时刻。
+                            无论你是同行的开发者，还是路过的冒险者，都欢迎在此驻足。
+                        </p>
+                        <p class="about-card__signature">
+                            — 维尔德，于旅途中
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Skill tags -->
+                <div class="skill-tags">
+                    <span class="tag">HTML5</span>
+                    <span class="tag">CSS3</span>
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">React</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">D&D 5E</span>
+                    <span class="tag">TRPG</span>
+                    <span class="tag">奇幻文学</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SECTION 4: BLOG ========== -->
+        <section class="section" id="blog">
+            <h2 class="section__heading reveal">
+                <span class="section__ornament" aria-hidden="true">📜</span>
+                冒险手记
+                <span class="section__ornament" aria-hidden="true">📜</span>
+            </h2>
+            <p class="section__subtitle reveal">记录每一次冒险与思考</p>
+
+            <!-- Blog posts loaded dynamically -->
+            <div class="blog-list" id="blog-posts">
+                <!-- Fallback: shown while loading -->
+                <div class="blog-loading reveal" id="blog-loading">
+                    <p>正在翻开冒险手记...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SECTION 5: PROJECTS / QUESTS ========== -->
+        <section class="section" id="projects">
+            <h2 class="section__heading reveal">
+                <span class="section__ornament" aria-hidden="true">🗡️</span>
+                冒险征程
+                <span class="section__ornament" aria-hidden="true">🗡️</span>
+            </h2>
+            <p class="section__subtitle reveal">进行中的任务与已完成的项目</p>
+
+            <div class="quest-grid">
+                <article class="quest-card glass-card reveal">
+                    <div class="quest-card__icon" aria-hidden="true">🐉</div>
+                    <h3 class="quest-card__title">龙与地下城跑团工具</h3>
+                    <span class="quest-card__status quest-card__status--active">进行中</span>
+                    <p class="quest-card__desc">
+                        一套纯前端跑团辅助工具：骰子掷点、角色卡管理、战斗追踪器。使用 React + TypeScript 构建。
+                    </p>
+                </article>
+
+                <article class="quest-card glass-card reveal">
+                    <div class="quest-card__icon" aria-hidden="true">📖</div>
+                    <h3 class="quest-card__title">奇幻世界设定集 Wiki</h3>
+                    <span class="quest-card__status quest-card__status--done">已完成</span>
+                    <p class="quest-card__desc">
+                        自建 D&D 战役世界观百科，包含地图、种族、历史年表和 NPC 图鉴。基于 VitePress。
+                    </p>
+                </article>
+
+                <article class="quest-card glass-card reveal">
+                    <div class="quest-card__icon" aria-hidden="true">🎨</div>
+                    <h3 class="quest-card__title">CSS 奇幻风格组件库</h3>
+                    <span class="quest-card__status quest-card__status--active">进行中</span>
+                    <p class="quest-card__desc">
+                        一套以中世纪奇幻风格为主题的 UI 组件库，支持 parchment 纹理、魔法光效等 D&D 风格元素。
+                    </p>
+                </article>
+
+                <article class="quest-card glass-card reveal">
+                    <div class="quest-card__icon" aria-hidden="true">🎲</div>
+                    <h3 class="quest-card__title">TRPG 线上跑团平台体验设计</h3>
+                    <span class="quest-card__status quest-card__status--planning">规划中</span>
+                    <p class="quest-card__desc">
+                        探索更沉浸、更直观的线上跑团交互体验，让远程玩家也能感受面对面的冒险氛围。
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <!-- ========== SECTION 6: INTERACTIVE D20 ========== -->
+        <section class="section" id="dice">
+            <h2 class="section__heading reveal">
+                <span class="section__ornament" aria-hidden="true">🎲</span>
+                命运骰子
+                <span class="section__ornament" aria-hidden="true">🎲</span>
+            </h2>
+            <p class="section__subtitle reveal">点击骰子，看看命运为你准备了什么</p>
+
+            <div class="dice-area reveal">
+                <div class="dice-container" id="dice-container">
+                    <!-- SVG d20 Dice -->
+                    <svg class="dice-svg" id="dice-svg" viewBox="0 0 100 100" aria-label="二十面骰子，点击掷骰">
+                        <polygon points="50,6 90,36 90,64 50,94 10,64 10,36"
+                            fill="rgba(18,18,26,0.9)" stroke="#c9a84c" stroke-width="1.5"/>
+                        <polygon points="50,6 50,94 10,64" fill="none" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+                        <polygon points="50,6 50,94 90,64" fill="none" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+                        <polygon points="50,6 90,36 10,36" fill="none" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+                        <text x="50" y="58" text-anchor="middle" fill="#c9a84c" font-size="24" font-family="serif" font-weight="bold" id="dice-number">20</text>
+                    </svg>
+                    <div class="dice-result" id="dice-result" aria-live="polite"></div>
+                </div>
+                <p class="dice-hint">Click the d20 to roll!</p>
+            </div>
+        </section>
+
+        <!-- ========== SECTION 7: SOCIAL LINKS ========== -->
+        <section class="section" id="social">
+            <h2 class="section__heading reveal">
+                <span class="section__ornament" aria-hidden="true">🏰</span>
+                冒险者公会
+                <span class="section__ornament" aria-hidden="true">🏰</span>
+            </h2>
+            <p class="section__subtitle reveal">在其他地方找到我</p>
+
+            <div class="social-links reveal">
+                <!-- GitHub -->
+                <a class="social-link" href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <svg class="social-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                    <span class="social-link__label">GitHub</span>
+                </a>
+
+                <!-- Email -->
+                <a class="social-link" href="mailto:wilder@example.com" aria-label="Email">
+                    <svg class="social-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <path d="m22 4-10 7L2 4"/>
+                    </svg>
+                    <span class="social-link__label">Email</span>
+                </a>
+
+                <!-- RSS -->
+                <a class="social-link" href="#" aria-label="RSS 订阅">
+                    <svg class="social-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 11a9 9 0 0 1 9 9"/>
+                        <path d="M4 4a16 16 0 0 1 16 16"/>
+                        <circle cx="5" cy="19" r="1"/>
+                    </svg>
+                    <span class="social-link__label">RSS</span>
+                </a>
+
+                <!-- Bilibili -->
+                <a class="social-link" href="https://space.bilibili.com" target="_blank" rel="noopener noreferrer" aria-label="Bilibili">
+                    <svg class="social-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="4" width="20" height="16" rx="3"/>
+                        <path d="M9 8.5v7M12 8.5v7M15 8.5v7"/>
+                    </svg>
+                    <span class="social-link__label">Bilibili</span>
+                </a>
+
+                <!-- Steam -->
+                <a class="social-link" href="https://steamcommunity.com" target="_blank" rel="noopener noreferrer" aria-label="Steam">
+                    <svg class="social-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 12l2 2 4-4"/>
+                        <circle cx="8" cy="12" r="1.5"/>
+                    </svg>
+                    <span class="social-link__label">Steam</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ========== SECTION 8: FOOTER ========== -->
+        <footer class="footer reveal">
+            <!-- Dragon divider SVG -->
+            <svg class="footer__divider" viewBox="0 0 300 40" aria-hidden="true">
+                <!-- Left wing -->
+                <path d="M150,20 Q130,5 100,12 Q70,19 50,8 Q30,2 10,15 Q5,20 1,18"
+                    fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+                <!-- Right wing -->
+                <path d="M150,20 Q170,5 200,12 Q230,19 250,8 Q270,2 290,15 Q295,20 299,18"
+                    fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+                <!-- Central gem -->
+                <polygon points="150,12 156,22 150,32 144,22"
+                    fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
+            </svg>
+
+            <p class="footer__quote">"当骰子停下的那一刻，命运已然注定。"</p>
+            <p class="footer__quote-en">"When the dice come to rest, fate is sealed."</p>
+
+            <p class="footer__copyright">
+                &copy; 2026 维尔德 Wilder &nbsp;·&nbsp; 用纯 HTML / CSS / JavaScript 打造
+            </p>
+            <p class="footer__tiny">Roll for initiative! 🎲</p>
+        </footer>
+    </div>
+    <!-- /container -->
+
+    <!-- Back to top -->
+    <button class="back-to-top" id="back-to-top" aria-label="回到顶部" title="回到顶部">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </button>
+
+    <!-- Inline blog posts data (fallback for file:// protocol) -->
+    <script>
+        window.__BLOG_POSTS__ = [
+            {"id":1,"date":"2026-06-10","title":"第一次龙与地下城冒险：踏入被遗忘的国度","excerpt":"上周末我参加了人生中第一场 D&D 跑团。作为一个半精灵法师，我的第一个法术飞弹就打偏了……但这正是跑团的魅力所在——你永远不知道骰子会带来怎样的惊喜。","tags":["D&D","TRPG","跑团战报"],"url":"#","category":"adventure"},
+            {"id":2,"date":"2026-05-28","title":"前端开发中的魔法咒语：CSS 自定义属性完全指南","excerpt":"就像法师需要咒语书一样，前端开发者也需要一套好用的 CSS 变量系统。本文深入探讨 CSS 自定义属性的高级用法，让你的样式表像魔法一样灵活而强大。","tags":["前端","CSS","Web开发"],"url":"#","category":"tech"},
+            {"id":3,"date":"2026-05-15","title":"打造属于自己的桌面角色扮演工具套件","excerpt":"从零开始用纯 HTML/CSS/JS 搭建一套跑团辅助工具：骰子掷点器、角色卡管理、战斗追踪器。不依赖任何框架，体验最原汁原味的 Web 开发乐趣。","tags":["TRPG","JavaScript","个人项目"],"url":"#","category":"project"},
+            {"id":4,"date":"2026-04-22","title":"为什么每个程序员都应该尝试一次 TRPG","excerpt":"TRPG 和编程有着惊人的相似之处：都需要创造性地解决问题、团队协作，以及面对随机性时的应变能力。来听听一个程序员的跑团感悟。","tags":["TRPG","思考","成长"],"url":"#","category":"thoughts"},
+            {"id":5,"date":"2026-04-08","title":"用 React 构建一个沉浸式的角色卡系统","excerpt":"一个好的角色卡不仅需要美观，更需要交互流畅。本文分享我在构建 D&D 5E 角色卡时遇到的挑战和解决方案——从状态管理到数据持久化。","tags":["React","TypeScript","D&D","前端"],"url":"#","category":"tech"},
+            {"id":6,"date":"2026-03-15","title":"旷野之息与 D&D：开放世界设计中的叙事自由","excerpt":"《塞尔达传说：旷野之息》和龙与地下城有一个共同点：它们都给了玩家无与伦比的自由度。这篇文章探讨开放世界游戏设计与 TRPG 叙事之间的奇妙联系。","tags":["游戏设计","D&D","思考"],"url":"#","category":"thoughts"}
+        ];
+    </script>
+
+    <!-- JavaScript -->
+    <script src="js/blog-loader.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/scroll-reveal.js"></script>
+    <script src="js/dice-roller.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

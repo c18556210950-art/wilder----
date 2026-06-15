@@ -1,0 +1,154 @@
+/* ============================================================
+   D&D THEMED PERSONAL BLOG — Responsive Styles
+   维尔德 Wilder
+   ============================================================ */
+
+/* ---------- Tablet: 600px+ ---------- */
+@media (min-width: 600px) {
+    .about-card__sheet {
+        flex-wrap: nowrap;
+    }
+
+    .quest-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .nav {
+        gap: 0.3rem;
+    }
+
+    .nav__link {
+        padding: 0.5rem 1.2rem;
+    }
+}
+
+/* ---------- Desktop: 768px+ ---------- */
+@media (min-width: 768px) {
+    .container {
+        padding: 0 2rem;
+    }
+
+    .hero {
+        padding-top: clamp(3rem, 6vw, 5rem);
+    }
+
+    .nav__link {
+        padding: 0.55rem 1.5rem;
+    }
+
+    .social-links {
+        gap: 1.5rem;
+    }
+
+    .quest-grid {
+        gap: 1.5rem;
+    }
+}
+
+/* ---------- Large Desktop: 1024px+ ---------- */
+@media (min-width: 1024px) {
+    :root {
+        --container-max: 760px;
+    }
+
+    .blog-card {
+        transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+}
+
+/* ---------- Extra Large: 1200px+ ---------- */
+@media (min-width: 1200px) {
+    :root {
+        --container-max: 800px;
+    }
+}
+
+/* ---------- Small Mobile: < 400px ---------- */
+@media (max-width: 399px) {
+    .hero__name {
+        font-size: 1.6rem;
+    }
+
+    .nav__link {
+        padding: 0.35rem 0.6rem;
+    }
+
+    .nav__en {
+        display: none; /* Hide English subtitle on very small screens */
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 0.3rem;
+    }
+
+    .stat {
+        padding: 0.25rem;
+    }
+
+    .stat__value {
+        font-size: 1.1rem;
+    }
+
+    .quest-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .social-link {
+        min-width: 56px;
+        padding: 0.5rem 0.6rem;
+    }
+
+    .social-link__label {
+        font-size: 0.6rem;
+    }
+}
+
+/* ---------- Touch devices ---------- */
+@media (hover: none) and (pointer: coarse) {
+    .glass-card:hover {
+        transform: none;
+        box-shadow: var(--shadow-card);
+        border-color: var(--glass-border);
+    }
+
+    .nav__link {
+        min-height: 44px; /* Accessibility: minimum touch target */
+        display: flex;
+        align-items: center;
+    }
+
+    .social-link {
+        min-height: 44px;
+    }
+
+    .back-to-top {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+/* ---------- Print styles ---------- */
+@media print {
+    #particle-canvas,
+    .back-to-top,
+    .dice-area {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        color: #222;
+    }
+
+    .glass-card {
+        background: none;
+        border: 1px solid #ccc;
+        box-shadow: none;
+        backdrop-filter: none;
+    }
+
+    a {
+        color: #333;
+    }
+}
