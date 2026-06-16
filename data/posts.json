@@ -1,56 +1,47 @@
 [
     {
-        "id": 1,
-        "date": "2026-06-10",
-        "title": "第一次龙与地下城冒险：踏入被遗忘的国度",
-        "excerpt": "上周末我参加了人生中第一场 D&D 跑团。作为一个半精灵法师，我的第一个法术飞弹就打偏了……但这正是跑团的魅力所在——你永远不知道骰子会带来怎样的惊喜。",
-        "tags": ["D&D", "TRPG", "跑团战报"],
-        "url": "#",
-        "category": "adventure"
-    },
-    {
-        "id": 2,
-        "date": "2026-05-28",
-        "title": "前端开发中的魔法咒语：CSS 自定义属性完全指南",
-        "excerpt": "就像法师需要咒语书一样，前端开发者也需要一套好用的 CSS 变量系统。本文深入探讨 CSS 自定义属性的高级用法，让你的样式表像魔法一样灵活而强大。",
-        "tags": ["前端", "CSS", "Web开发"],
-        "url": "#",
-        "category": "tech"
-    },
-    {
-        "id": 3,
-        "date": "2026-05-15",
-        "title": "打造属于自己的桌面角色扮演工具套件",
-        "excerpt": "从零开始用纯 HTML/CSS/JS 搭建一套跑团辅助工具：骰子掷点器、角色卡管理、战斗追踪器。不依赖任何框架，体验最原汁原味的 Web 开发乐趣。",
-        "tags": ["TRPG", "JavaScript", "个人项目"],
-        "url": "#",
+        "id": 8,
+        "date": "2026-06-15",
+        "title": "D&D Agent：基于 DeepSeek 的 D&D 5E 智能助手",
+        "excerpt": "一个完整的 D&D 5E AI 助手项目，基于 DeepSeek API 多轮函数调用。提供法术查询、怪物图鉴、规则速查、角色构建和骰子掷点功能。FastAPI + SQLite FTS5 + 原生 JS 前端。",
+        "tags": ["D&D", "AI", "DeepSeek", "FastAPI", "开源项目"],
+        "url": "blog/dnd-agent.html",
         "category": "project"
     },
     {
-        "id": 4,
-        "date": "2026-04-22",
-        "title": "为什么每个程序员都应该尝试一次 TRPG",
-        "excerpt": "TRPG 和编程有着惊人的相似之处：都需要创造性地解决问题、团队协作，以及面对随机性时的应变能力。来听听一个程序员的跑团感悟。",
-        "tags": ["TRPG", "思考", "成长"],
-        "url": "#",
-        "category": "thoughts"
+        "id": 7,
+        "date": "2026-06-14",
+        "title": "FVTT 多用户共享平台：让每个人都有自己的跑团世界",
+        "excerpt": "基于 Foundry VTT 构建的多用户共享系统。用户自助注册即获独立 FVTT 实例，FRP 内网穿透公网访问，一键启停，实例预置池零等待分配。",
+        "tags": ["FVTT", "TRPG", "Node.js", "内网穿透", "开源项目"],
+        "url": "blog/fvtt-platform.html",
+        "category": "project"
     },
     {
-        "id": 5,
-        "date": "2026-04-08",
-        "title": "用 React 构建一个沉浸式的角色卡系统",
-        "excerpt": "一个好的角色卡不仅需要美观，更需要交互流畅。本文分享我在构建 D&D 5E 角色卡时遇到的挑战和解决方案——从状态管理到数据持久化。",
-        "tags": ["React", "TypeScript", "D&D", "前端"],
-        "url": "#",
+        "id": 9,
+        "date": "2026-06-13",
+        "title": "团信网：为 TRPG 玩家建一座可信的档案馆",
+        "excerpt": "一个为桌面角色扮演游戏玩家打造的专业档案管理平台。记录跑团时间线、建立可验证的 DM-PL 关系网络、可视化关系图谱——让每一段冒险都有迹可循。",
+        "tags": ["TRPG", "Flask", "Python", "全栈", "开源项目"],
+        "url": "blog/tuanxin.html",
+        "category": "project"
+    },
+    {
+        "id": 11,
+        "date": "2026-06-01",
+        "title": "从零开始到量子计算机（一）：物质波与薛定谔方程",
+        "excerpt": "从德布罗意的物质波假说出发，一步步推导出薛定谔方程，用无限深势阱展示能量量子化的来源。不回避公式，但坦诚告诉你哪些是\"天上掉下来的\"。",
+        "tags": ["量子计算", "物理学", "量子力学", "教程"],
+        "url": "blog/quantum-1.html",
         "category": "tech"
     },
     {
-        "id": 6,
-        "date": "2026-03-15",
-        "title": "旷野之息与 D&D：开放世界设计中的叙事自由",
-        "excerpt": "《塞尔达传说：旷野之息》和龙与地下城有一个共同点：它们都给了玩家无与伦比的自由度。这篇文章探讨开放世界游戏设计与 TRPG 叙事之间的奇妙联系。",
-        "tags": ["游戏设计", "D&D", "思考"],
-        "url": "#",
-        "category": "thoughts"
+        "id": 10,
+        "date": "2026-05-31",
+        "title": "五月读书小记",
+        "excerpt": "wild magic read",
+        "tags": ["读书", "话剧", "历史", "科幻", "漫画"],
+        "url": "blog/may-reading.html",
+        "category": "reading"
     }
 ]

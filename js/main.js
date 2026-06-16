@@ -12,6 +12,7 @@
         initStickyNav();
         initActiveNavSection();
         initBackToTop();
+        initEmailCopy();
     }
 
     // ---------- Smooth Scroll for Nav Links ----------
@@ -63,51 +64,49 @@
 
     // ---------- Active Nav Section ----------
     function initActiveNavSection() {
-        const nav = document.getElementById('main-nav');
+        var nav = document.getElementById('main-nav');
         if (!nav) return;
 
-        const links = nav.querySelectorAll('.nav__link');
-        const sections = [];
+        var links = nav.querySelectorAll('.nav__link');
+        var sections = [];
 
         links.forEach(function (link) {
-            const href = link.getAttribute('href');
+            var href = link.getAttribute('href');
             if (href && href.startsWith('#')) {
-                const section = document.querySelector(href);
+                var section = document.querySelector(href);
                 if (section) {
-                    sections.push({ link, section });
+                    sections.push({ link: link, section: section });
                 }
             }
         });
 
         if (sections.length === 0) return;
 
-        const observer = new IntersectionObserver(
-            function (entries) {
-                let activeFound = false;
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting && !activeFound) {
-                        // Find matching link
-                        sections.forEach(function (item) {
-                            if (item.section === entry.target) {
-                                links.forEach(function (l) {
-                                    l.classList.remove('nav__link--active');
-                                });
-                                item.link.classList.add('nav__link--active');
-                            }
-                        });
-                        activeFound = true;
-                    }
-                });
-            },
-            {
-                threshold: 0.25,
-                rootMargin: '-80px 0px -60% 0px',
-            }
-        );
+        function updateActive() {
+            var navBottom = nav.getBoundingClientRect().bottom + 12;
+            var closest = null;
+            var closestDist = Infinity;
 
-        sections.forEach(function (item) {
-            observer.observe(item.section);
-        });
+            sections.forEach(function (item) {
+                var top = item.section.getBoundingClientRect().top;
+                // Section top is above or close to nav bottom
+                if (top <= navBottom + 60) {
+                    var dist = navBottom - top;
+                    if (dist >= 0 && dist < closestDist) {
+                        closestDist = dist;
+                        closest = item;
+                    }
+                }
+            });
+
+            if (closest) {
+                links.forEach(function (l) { l.classList.remove('nav__link--active'); });
+                closest.link.classList.add('nav__link--active');
+            }
+        }
+
+        window.addEventListener('scroll', updateActive, { passive: true });
+        updateActive();
     }
 
     // ---------- Back to Top Button ----------
@@ -131,6 +130,62 @@
         btn.addEventListener('click', function () {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+    }
+
+    // ---------- Email Copy to Clipboard ----------
+    function initEmailCopy() {
+        var emailLink = document.getElementById('email-link');
+        if (!emailLink) return;
+
+        emailLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            var email = 'yuanye24@qq.com';
+
+            // Try modern clipboard API
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(email).then(function () {
+                    showCopyToast(emailLink);
+                }).catch(function () {
+                    fallbackCopy(email, emailLink);
+                });
+            } else {
+                fallbackCopy(email, emailLink);
+            }
+        });
+    }
+
+    function fallbackCopy(text, el) {
+        var textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        textarea.style.top = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            showCopyToast(el);
+        } catch (err) {
+            // If copy fails, open mailto as fallback
+            window.location.href = 'mailto:' + text;
+        }
+        document.body.removeChild(textarea);
+    }
+
+    function showCopyToast(el) {
+        // Remove any existing toast
+        var existing = el.querySelector('.copy-toast');
+        if (existing) existing.remove();
+
+        var toast = document.createElement('span');
+        toast.className = 'copy-toast';
+        toast.textContent = '已复制 ✓';
+        el.appendChild(toast);
+
+        setTimeout(function () {
+            toast.remove();
+        }, 1800);
     }
 
     // ---------- Init on DOM Ready ----------

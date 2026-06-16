@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>FVTT 多用户共享平台 — 维尔德 Wilder</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,1 30,9 30,23 16,31 2,23 2,9' fill='none' stroke='%23c9a84c' stroke-width='1.5'/%3E%3Ctext x='16' y='20' text-anchor='middle' fill='%23c9a84c' font-size='12' font-family='serif'%3E20%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .blog-post { max-width: 760px; margin: 0 auto; padding: 2rem 0; }
+        .blog-post__header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--glass-border); }
+        .blog-post__date { color: var(--parchment-dim); font-family: 'Cinzel', serif; font-size: var(--text-sm); }
+        .blog-post__title { font-family: 'Cinzel', serif; font-size: var(--text-2xl); color: var(--gold-light); margin: 0.5rem 0; }
+        .blog-post__tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+        .blog-post__body { color: var(--parchment); line-height: 1.85; }
+        .blog-post__body h2 { font-family: 'Cinzel', serif; color: var(--gold-primary); font-size: var(--text-xl); margin: 2rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--glass-border); }
+        .blog-post__body h3 { font-family: 'Cinzel', serif; color: var(--gold-light); font-size: var(--text-lg); margin: 1.5rem 0 0.5rem; }
+        .blog-post__body p { margin-bottom: 0.85rem; }
+        .blog-post__body ul, .blog-post__body ol { margin: 0.5rem 0 1rem 1.5rem; }
+        .blog-post__body li { margin-bottom: 0.3rem; }
+        .blog-post__body code { background: rgba(201,168,76,0.1); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.85em; color: var(--gold-light); }
+        .blog-post__body pre { background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 1rem; overflow-x: auto; margin: 1rem 0; }
+        .blog-post__body pre code { background: none; padding: 0; color: var(--parchment); }
+        .blog-post__body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: var(--text-sm); }
+        .blog-post__body th, .blog-post__body td { padding: 0.5rem 0.75rem; border: 1px solid var(--glass-border); text-align: left; }
+        .blog-post__body th { background: rgba(201,168,76,0.1); color: var(--gold-primary); font-family: 'Cinzel', serif; }
+        .blog-post__body strong { color: var(--gold-light); }
+        .blog-post__body blockquote { border-left: 3px solid var(--gold-primary); margin: 1rem 0; padding: 0.5rem 1rem; background: rgba(201,168,76,0.05); color: var(--parchment-dim); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+        .blog-post__body hr { border: none; border-top: 1px solid var(--glass-border); margin: 2rem 0; }
+        .back-link { display: inline-block; margin: 2rem 0 1rem; color: var(--gold-primary); font-family: 'Cinzel', serif; font-size: var(--text-sm); }
+        .back-link:hover { color: var(--gold-light); }
+    </style>
+</head>
+<body>
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <div class="container">
+        <a class="back-link" href="../index.html#blog">← 返回冒险手记</a>
+        <article class="blog-post">
+            <header class="blog-post__header">
+                <time class="blog-post__date">2026年06月14日</time>
+                <h1 class="blog-post__title">FVTT 多用户共享平台：让每个人都有自己的跑团世界</h1>
+                <div class="blog-post__tags">
+                    <span class="tag">FVTT</span><span class="tag">TRPG</span><span class="tag">Node.js</span><span class="tag">内网穿透</span><span class="tag">开源项目</span>
+                </div>
+            </header>
+            <div class="blog-post__body">
+                <p>自从入了 FVTT（Foundry Virtual Tabletop）的坑，跑团的体验上了好几个台阶。动态光影、自动判定、角色卡联动——比 Roll20 舒服太多了。</p>
+                <p>但问题来了：我有好几个跑团圈子，大家都想用我的 FVTT。FVTT 本身是单实例设计，一个进程只能服务一组玩家。总不能让大家排队吧？于是有了这个项目——让每个人都拥有自己独立的 FVTT 世界。</p>
+
+                <h2>思路</h2>
+                <p>核心需求很明确：多人共用一台服务器，每人一个独立 FVTT 实例，互不干扰，还能从公网访问。</p>
+                <p>拆解下来就是几个子问题：怎么管理多个 FVTT 进程？怎么给每人分配独立端口？怎么让外网能访问到本机的这些端口？怎么让用户自己注册、自己管理实例而不用每次找我操作？</p>
+                <p>最终的方案：Node.js 做 Web 门户负责用户系统和进程调度，每个用户分配独立端口 + 独立数据目录，FRP 做内网穿透把端口映射到公网。</p>
+
+                <h2>进程管理是核心难点</h2>
+                <p>FVTT 是一个 Electron 应用，通过 <code>child_process.spawn</code> 启动。每个实例需要指定独立的 <code>--port</code> 和 <code>--dataPath</code>。进程管理器负责跟踪每个实例的状态：运行中、已停止、启动中、异常退出。</p>
+                <p>最棘手的是启动检测。FVTT 启动不是瞬间完成的——它要先加载模块、读取世界数据、初始化数据库，这个过程可能要 15-30 秒。怎么知道它真正"就绪"了？我用了轮询检测：每隔 2 秒尝试请求 FVTT 的 <code>/api/status</code> 端点，直到返回 200 才算启动完成，最长等待 30 秒后超时报错。</p>
+                <p>还有一个坑：FVTT 进程有时会悄悄挂掉（内存不足、世界数据损坏等等）。所以加了健康检查——定时 ping 每个运行中的实例，发现挂掉的自动标记状态并在仪表盘提示用户。</p>
+
+                <h2>预置池——让等待消失</h2>
+                <p>最初的设计是新用户注册时才创建实例，但用户要等数据复制完成（FVTT 的 Data 目录有几百 MB），体验很不好。</p>
+                <p>后来加了一个"预置池"机制：系统后台始终保持一个提前复制好的实例模板。新用户注册时直接从池子里取，秒级分配。然后后台异步再准备下一个预置实例，形成流水线。这个改动让注册体验从"等 30 秒"变成了"即时可用"。</p>
+
+                <h2>FRP 动态配置</h2>
+                <p>每个 FVTT 实例都需要一个公网端口。FRP 的配置通常是静态写在 <code>frpc.ini</code> 里的，但这里端口是动态分配的（每启动一个实例就多一个端口映射）。</p>
+                <p>解决方法是动态生成 FRP 配置：每次用户启动实例时，<code>frpManager.js</code> 在 FRP 配置目录下新建一个 <code>{用户名}.ini</code>，写入该实例的端口映射规则，然后 reload FRP 客户端。用户停止实例时删除对应的配置文件并再次 reload。FRP 的 <code>include</code> 指令支持加载目录下的所有配置，正好用来实现这个按需加载的机制。</p>
+
+                <h2>安全方面</h2>
+                <p>用户密码用 bcrypt（12 轮哈希）存储，session 有过期时间。每个用户只能操作自己的实例——API 路由层做了权限校验，不能越权启动或停止别人的 FVTT。</p>
+                <p>FVTT 进程本身绑定在 <code>127.0.0.1</code> 上，不直接暴露给外网，只通过 FRP 隧道对外。这样即使有人扫到了公网端口，也无法绕过 FRP 直接访问本机服务。管理面板有独立的权限控制，只有管理员账号能查看全局状态和操作日志。</p>
+
+                <h2>用户端体验</h2>
+                <p>仪表盘设计得很简洁：一个状态指示灯（绿色运行中 / 灰色已停止）、启动/停止按钮、以及公网访问链接。用户在仪表盘点击"启动 FVTT"，几秒钟后就能拿到一个 <code>http://106.14.80.115:XXXXX</code> 的链接，点进去就是属于他自己的 FVTT 世界。</p>
+                <p>新用户自动获得一个预置好的世界模板（<code>cn-wild-sheep-chase</code>，一个入门级的 D&D 冒险），不用从零开始搭建。首次进入 FVTT 时自行设置 GM 密码，之后就完全是自己的独立空间了。</p>
+
+                <h2>项目结构</h2>
+                <pre><code>D:\fvtt free\
+├── fvtt\              # FVTT 程序本体 + 模板数据
+├── portal\            # Node.js Web 门户
+│   ├── server.js      # 主入口
+│   ├── services\      # 进程管理、FRP 配置、预置池、端口分配
+│   ├── routes\        # 认证、仪表盘、管理面板
+│   └── views\         # EJS 页面模板
+├── instances\         # 用户实例目录（自动生成，每人独立）
+└── run_portal.bat     # 一键启动</code></pre>
+
+                <h2>搭建步骤</h2>
+                <p>环境要求 Windows + Node.js 18+。首次运行先装依赖：</p>
+                <pre><code>cd "D:\fvtt free\portal"
+npm install
+node setup-admin.js    # 创建管理员账户
+node server.js         # 启动门户，默认端口 8888</code></pre>
+                <p>然后访问 <code>http://localhost:8888</code> 就能看到注册页面了。公网访问需要一台有公网 IP 的服务器跑 FRP 服务端，我这用的是阿里云轻量服务器。</p>
+
+                <h2>写在最后</h2>
+                <p>这个项目断断续续写了差不多两周，踩过的坑包括但不限于：FVTT 进程偶尔僵尸、FRP reload 的竞态条件、Windows 下 spawn 的路径编码问题……但最终效果还不错，几个跑团圈子同时在线完全没问题。</p>
+                <p>后续想做的：容器化（每个实例跑在 Docker 里，资源隔离更好）、自动备份（定时把用户的世界数据打包存到云端）、以及一个简单的世界市场（用户可以分享自己做的好玩模组）。</p>
+                <p>代码是开源的，仅供学习交流。如果你也想给跑团群搭建一个共享 FVTT 平台，希望这篇文章能帮你少踩几个坑。</p>
+            </div>
+        </article>
+        <a class="back-link" href="../index.html#blog">← 返回冒险手记</a>
+    </div>
+    <script src="../js/particles.js"></script>
+
+    <!-- Floating Music Player -->
+    <div class="floating-player glass-card" id="floating-player">
+        <div class="floating-player__bar" id="floating-bar">
+            <span class="floating-player__icon" aria-hidden="true">🎵</span>
+            <span class="floating-player__track" id="fp-track-name">D&D 奇幻氛围音乐</span>
+            <button class="floating-player__play-btn" id="fp-btn-play" title="播放" aria-label="播放">
+                <svg viewBox="0 0 24 24" fill="currentColor" id="fp-icon-play"><path d="M8 5v14l11-7z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" id="fp-icon-pause" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+            <button class="floating-player__toggle" id="fp-toggle" title="展开" aria-label="展开播放器">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+        </div>
+        <div class="floating-player__panel" id="fp-panel" style="display:none;">
+            <div class="floating-player__controls">
+                <button class="music-player__btn" id="btn-prev" title="上一首" aria-label="上一首"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+                <button class="music-player__btn music-player__btn--play" id="btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor" id="icon-play"><path d="M8 5v14l11-7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" id="icon-pause" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></button>
+                <button class="music-player__btn" id="btn-next" title="下一首" aria-label="下一首"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+            </div>
+            <div class="floating-player__volume">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="music-player__volume-icon" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                <input type="range" class="music-player__volume-slider" id="volume-slider" min="0" max="100" value="40" aria-label="音量">
+            </div>
+            <span class="floating-player__track-full" id="track-name">D&D 奇幻氛围音乐</span>
+        </div>
+    </div>
+    <div id="youtube-player" style="display:none;"></div>
+
+    <script src="../js/music-player.js"></script>
+</body>
+</html>

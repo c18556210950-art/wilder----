@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>团信网 · TRPG玩家档案系统 — 维尔德 Wilder</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,1 30,9 30,23 16,31 2,23 2,9' fill='none' stroke='%23c9a84c' stroke-width='1.5'/%3E%3Ctext x='16' y='20' text-anchor='middle' fill='%23c9a84c' font-size='12' font-family='serif'%3E20%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .blog-post { max-width: 760px; margin: 0 auto; padding: 2rem 0; }
+        .blog-post__header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--glass-border); }
+        .blog-post__date { color: var(--parchment-dim); font-family: 'Cinzel', serif; font-size: var(--text-sm); }
+        .blog-post__title { font-family: 'Cinzel', serif; font-size: var(--text-2xl); color: var(--gold-light); margin: 0.5rem 0; }
+        .blog-post__tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+        .blog-post__body { color: var(--parchment); line-height: 1.85; }
+        .blog-post__body h2 { font-family: 'Cinzel', serif; color: var(--gold-primary); font-size: var(--text-xl); margin: 2rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--glass-border); }
+        .blog-post__body h3 { font-family: 'Cinzel', serif; color: var(--gold-light); font-size: var(--text-lg); margin: 1.5rem 0 0.5rem; }
+        .blog-post__body p { margin-bottom: 0.85rem; }
+        .blog-post__body ul, .blog-post__body ol { margin: 0.5rem 0 1rem 1.5rem; }
+        .blog-post__body li { margin-bottom: 0.3rem; }
+        .blog-post__body code { background: rgba(201,168,76,0.1); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.85em; color: var(--gold-light); }
+        .blog-post__body pre { background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 1rem; overflow-x: auto; margin: 1rem 0; }
+        .blog-post__body pre code { background: none; padding: 0; color: var(--parchment); }
+        .blog-post__body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: var(--text-sm); }
+        .blog-post__body th, .blog-post__body td { padding: 0.5rem 0.75rem; border: 1px solid var(--glass-border); text-align: left; }
+        .blog-post__body th { background: rgba(201,168,76,0.1); color: var(--gold-primary); font-family: 'Cinzel', serif; }
+        .blog-post__body strong { color: var(--gold-light); }
+        .blog-post__body blockquote { border-left: 3px solid var(--gold-primary); margin: 1rem 0; padding: 0.5rem 1rem; background: rgba(201,168,76,0.05); color: var(--parchment-dim); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+        .blog-post__body hr { border: none; border-top: 1px solid var(--glass-border); margin: 2rem 0; }
+        .back-link { display: inline-block; margin: 2rem 0 1rem; color: var(--gold-primary); font-family: 'Cinzel', serif; font-size: var(--text-sm); }
+        .back-link:hover { color: var(--gold-light); }
+    </style>
+</head>
+<body>
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <div class="container">
+        <a class="back-link" href="../index.html#blog">← 返回冒险手记</a>
+        <article class="blog-post">
+            <header class="blog-post__header">
+                <time class="blog-post__date">2026年06月13日</time>
+                <h1 class="blog-post__title">团信网：为 TRPG 玩家建一座可信的档案馆</h1>
+                <div class="blog-post__tags">
+                    <span class="tag">TRPG</span><span class="tag">Flask</span><span class="tag">Python</span><span class="tag">全栈</span><span class="tag">开源项目</span>
+                </div>
+            </header>
+            <div class="blog-post__body">
+                <p>跑团圈有个长期存在的痛点：你怎么证明自己真的跑过那么多团？</p>
+                <p>在招募板上，经常看到有人写"三年跑团经验""跑过几十个团"。但这些都是自我陈述，没有任何验证手段。DM 招人的时候只能靠聊天感觉来判断，遇到不靠谱的玩家也只能自认倒霉。反过来，玩家遇到不负责任的 DM 也无处记录——下次换个群继续坑人。</p>
+                <p>我想解决这个问题。于是有了<strong>团信网</strong>——一个为 TRPG 玩家建立可信档案的平台。</p>
+
+                <h2>核心理念：可验证的跑团履历</h2>
+                <p>团信网最核心的设计是一条简单的规则：<strong>你说的不算，别人确认的才算。</strong></p>
+                <p>具体怎么运作？你记录一条跑团经历——"2026年3月，和 DM 老张跑了 8 次 COC 的《暗黑边缘》。"这条记录不会立刻生效。系统会通知 DM 老张确认"是的，维尔德确实参加了这个团"。DM 确认后，这条记录才被标记为"已验证"。</p>
+                <p>更进一步——如果你和另一个 PL（玩家）互相确认了 DM-PL 关系，你们之间就建立了一条可追溯的信任链接。足够多的互认关系组成了一张关系网络。一个新 DM 想了解你，看一眼你的档案和关系图谱，比任何自我介绍都有说服力。</p>
+
+                <h2>关系图谱：让信任可视化</h2>
+                <p>这是我最喜欢的功能。每个玩家的档案页都有一个交互式关系图谱：节点是玩家，连线代表已确认的 DM-PL 关系。默认显示一度关系（直接和你一起跑过团的人），点击切换可以展开到二度关系——你认识的人认识的人。</p>
+                <p>这个图谱不仅好看，而且实用。TRPG 圈子其实很小，经常出现"啊原来你也认识老张！"的瞬间。关系网络让这种隐形的社交连接变得可见，也让伪造履历的成本大大提高——你不可能凭空编造出一个完整的关系网络。</p>
+
+                <h2>问卷系统：DM 的好帮手</h2>
+                <p>除了档案和关系认证，团信网还内置了一套问卷工具。DM 可以创建四种类型的问卷：招募问卷（招人时收集玩家偏好和可用时间）、偏好问卷（了解玩家喜欢什么类型的团）、互评问卷（团结束后收集反馈）、以及完全自定义的问卷。</p>
+                <p>这个功能来自我自己的切身体会。每次开新团，DM 都要在群里发一堆问题——"你周末晚上有空吗？""能接受多少战斗比例？""讨厌什么类型的剧情？"——然后手动整理几十条回复。有了问卷系统，创建、分发、统计全在一个页面搞定。</p>
+
+                <h2>技术选型：简单但扎实</h2>
+                <p>后端选了 Flask。说实话不是因为 Flask 有多强，而是这个项目不需要 Django 那种全家桶。Flask 够轻、够快，配合 SQLite 做数据存储，整个后端就几百行代码。</p>
+                <p>前端依然是我偏好的那一套——原生 HTML/CSS/JS，零框架依赖。这次用了 Font Awesome 的图标库（CDN 引入），主要是需要大量图标来表示不同的规则系统、状态标记和导航元素。API 风格是标准的 RESTful JSON，认证用的是简单的 Bearer Token 方案——登录后生成随机 Token，前端存 localStorage，每次请求带在 Header 里。</p>
+                <p>安全方面没有因为是"小项目"就偷懒。密码用 PBKDF2-SHA256 加 20 万轮迭代哈希，所有数据库查询都是参数化的（防 SQL 注入），用户输入前后端双重 HTML 转义（防 XSS），敏感操作都有所有权校验（防 IDOR）。这些东西都不是什么高深技术，但做了和没做是两回事。</p>
+
+                <h2>一些有意思的细节</h2>
+                <p><strong>档案验证码</strong>：用户可以生成一个一次性验证码，分享给第三方。比如一个新 DM 想核实你的跑团履历，你给他验证码，他在网站上输入就能看到你的档案摘要——不需要注册账号。验证码有过期时间，使用后自动失效。</p>
+                <p><strong>排行榜</strong>：按跑团次数排名，支持筛选——你可以只看"D&D 5e"的排行，或者只看某个时间段内的排行，甚至按扮演角色类型筛选。这其实不是为了竞争，更多的是一种社区激励——看到别人跑了那么多团，自己也会更积极地参与。</p>
+                <p><strong>社区广场</strong>：不是要替代 QQ 群或 Discord，而是提供一个更持久的信息发布渠道。招募帖不会像群消息一样被刷掉，战报和攻略可以长期沉淀。配合档案链接，招募帖可以直接展示 DM 的跑团履历。</p>
+
+                <h2>支持的系统</h2>
+                <p>目前覆盖了 COC 7th、D&D 5e、D&D 2024、Pathfinder 2e、赛博朋克 RED、Shadowrun 6e、Fate Core、Vampire: The Masquerade V5 等主流规则系统。选择规则系统时会自动匹配对应的角色字段和术语体系——比如 COC 角色是"调查员"而 D&D 是"冒险者"。</p>
+
+                <h2>跑起来</h2>
+                <p>Python 3.10+ 即可，没有其他环境依赖：</p>
+                <pre><code>cd backend
+pip install -r requirements.txt
+python seed.py   # 可选：填充测试数据
+python app.py    # 启动，默认端口 5001</code></pre>
+                <p>访问 <code>localhost:5001</code> 就能看到首页。种子数据创建了 10 个虚拟玩家、20 多条跑团记录和完整的关系网络，方便测试。所有测试账号密码统一为 <code>12345678</code>。</p>
+
+                <h2>后续计划</h2>
+                <p>目前团信网是一个单人项目，但它的潜力在于社区化。下一步想做的是：导入/导出功能（支持从其他跑团工具导入数据）、更丰富的数据可视化（跑团时间线、规则系统偏好分布）、以及可能的话——接入 Discord/QQ 的 OAuth 登录，降低注册门槛。</p>
+                <p>代码开源，仅供学习交流。如果你也是 TRPG 玩家，欢迎来试用，或者自己部署一套给你的跑团圈子用。</p>
+            </div>
+        </article>
+        <a class="back-link" href="../index.html#blog">← 返回冒险手记</a>
+    </div>
+    <script src="../js/particles.js"></script>
+
+    <!-- Floating Music Player -->
+    <div class="floating-player glass-card" id="floating-player">
+        <div class="floating-player__bar" id="floating-bar">
+            <span class="floating-player__icon" aria-hidden="true">🎵</span>
+            <span class="floating-player__track" id="fp-track-name">D&D 奇幻氛围音乐</span>
+            <button class="floating-player__play-btn" id="fp-btn-play" title="播放" aria-label="播放">
+                <svg viewBox="0 0 24 24" fill="currentColor" id="fp-icon-play"><path d="M8 5v14l11-7z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" id="fp-icon-pause" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+            <button class="floating-player__toggle" id="fp-toggle" title="展开" aria-label="展开播放器">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+        </div>
+        <div class="floating-player__panel" id="fp-panel" style="display:none;">
+            <div class="floating-player__controls">
+                <button class="music-player__btn" id="btn-prev" title="上一首" aria-label="上一首"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+                <button class="music-player__btn music-player__btn--play" id="btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor" id="icon-play"><path d="M8 5v14l11-7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" id="icon-pause" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></button>
+                <button class="music-player__btn" id="btn-next" title="下一首" aria-label="下一首"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+            </div>
+            <div class="floating-player__volume">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="music-player__volume-icon" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                <input type="range" class="music-player__volume-slider" id="volume-slider" min="0" max="100" value="40" aria-label="音量">
+            </div>
+            <span class="floating-player__track-full" id="track-name">D&D 奇幻氛围音乐</span>
+        </div>
+    </div>
+    <div id="youtube-player" style="display:none;"></div>
+
+    <script src="../js/music-player.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>D&D Agent — 维尔德 Wilder</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,1 30,9 30,23 16,31 2,23 2,9' fill='none' stroke='%23c9a84c' stroke-width='1.5'/%3E%3Ctext x='16' y='20' text-anchor='middle' fill='%23c9a84c' font-size='12' font-family='serif'%3E20%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .blog-post { max-width: 760px; margin: 0 auto; padding: 2rem 0; }
+        .blog-post__header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--glass-border); }
+        .blog-post__date { color: var(--parchment-dim); font-family: 'Cinzel', serif; font-size: var(--text-sm); }
+        .blog-post__title { font-family: 'Cinzel', serif; font-size: var(--text-2xl); color: var(--gold-light); margin: 0.5rem 0; }
+        .blog-post__tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+        .blog-post__body { color: var(--parchment); line-height: 1.85; }
+        .blog-post__body h2 { font-family: 'Cinzel', serif; color: var(--gold-primary); font-size: var(--text-xl); margin: 2rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--glass-border); }
+        .blog-post__body h3 { font-family: 'Cinzel', serif; color: var(--gold-light); font-size: var(--text-lg); margin: 1.5rem 0 0.5rem; }
+        .blog-post__body p { margin-bottom: 0.85rem; }
+        .blog-post__body ul, .blog-post__body ol { margin: 0.5rem 0 1rem 1.5rem; }
+        .blog-post__body li { margin-bottom: 0.3rem; }
+        .blog-post__body code { background: rgba(201,168,76,0.1); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.85em; color: var(--gold-light); }
+        .blog-post__body pre { background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 1rem; overflow-x: auto; margin: 1rem 0; }
+        .blog-post__body pre code { background: none; padding: 0; color: var(--parchment); }
+        .blog-post__body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: var(--text-sm); }
+        .blog-post__body th, .blog-post__body td { padding: 0.5rem 0.75rem; border: 1px solid var(--glass-border); text-align: left; }
+        .blog-post__body th { background: rgba(201,168,76,0.1); color: var(--gold-primary); font-family: 'Cinzel', serif; }
+        .blog-post__body strong { color: var(--gold-light); }
+        .blog-post__body blockquote { border-left: 3px solid var(--gold-primary); margin: 1rem 0; padding: 0.5rem 1rem; background: rgba(201,168,76,0.05); color: var(--parchment-dim); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+        .blog-post__body hr { border: none; border-top: 1px solid var(--glass-border); margin: 2rem 0; }
+        .back-link { display: inline-block; margin: 2rem 0 1rem; color: var(--gold-primary); font-family: 'Cinzel', serif; font-size: var(--text-sm); }
+        .back-link:hover { color: var(--gold-light); }
+    </style>
+</head>
+<body>
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <div class="container">
+        <a class="back-link" href="../index.html#blog">← 返回冒险手记</a>
+        <article class="blog-post">
+            <header class="blog-post__header">
+                <time class="blog-post__date">2026年06月15日</time>
+                <h1 class="blog-post__title">D&D Agent：基于 DeepSeek 的 D&D 5E 智能助手</h1>
+                <div class="blog-post__tags">
+                    <span class="tag">D&D</span><span class="tag">AI</span><span class="tag">DeepSeek</span><span class="tag">FastAPI</span><span class="tag">开源项目</span>
+                </div>
+            </header>
+            <div class="blog-post__body">
+                <p>跑团的时候最怕什么？不是骰出大失败，而是 DM 突然问"你这法术什么效果来着"，然后所有人开始疯狂翻书。</p>
+                <p>作为一个既爱跑团又爱写代码的人，我决定做一个能随时回答 D&D 规则问题的 AI 助手。于是就有了这个项目——基于 DeepSeek 的 D&D 5E 智能代理。</p>
+
+                <h2>它是什么</h2>
+                <p>简单说，这是一个可以对话的 D&D 知识库。你跟它说"火球术多少伤害"，它直接告诉你 8d6 火焰伤害、150 尺射程、20 尺半径范围——附带敏捷豁免减半的提醒。你问"成年红龙挑战等级多少"，它秒回 CR 17，顺便告诉你它的喷吐武器是 18d6 火焰伤害。</p>
+                <p>但它不止是查资料。它还能帮你掷骰子、构建角色，甚至根据你的描述推荐合适的法术和职业 Build。</p>
+
+                <h2>为什么选 DeepSeek</h2>
+                <p>最初考虑过直接用 OpenAI 的 API，但 DeepSeek 有几个打动我的点：一是中文理解能力明显更好，D&D 规则书的中文翻译有很多约定俗成的术语，DeepSeek 处理起来更自然；二是 Function Calling 的响应速度和稳定性都不错，多轮对话中反复调用工具函数也不会跑偏；三是性价比——跑团一晚上可能要问几十上百个问题，成本控制很重要。</p>
+                <p>核心机制是让 DeepSeek 充当"大脑"，SQLite 的 FTS5 全文索引充当"记忆"。用户问一个问题，AI 判断意图后调用对应的函数去数据库里搜——法术表、怪物图鉴、规则条目——然后把结果组织成自然的回答返回。</p>
+
+                <h2>数据从哪来</h2>
+                <p>这是整个项目最耗时的部分。D&D 5E 的规则资料分散在玩家手册、怪物图鉴和各种扩展书中，中文版通常是 CHM 格式。我的处理流程是：先把 CHM 反编译成 HTML，然后用 BeautifulSoup 解析每个页面，提取出结构化的法术数据（名称、环位、学派、施法时间、射程、成分、持续时间、描述）、怪物数据（名称、类型、CR、AC、HP、速度、属性、特性、动作）和规则条目。</p>
+                <p>中间踩了不少坑——CHM 导出的 HTML 编码有 GBK 也有 UTF-8，得逐个判断；法术描述里混杂着表格和列表，解析逻辑要写得很细致；有些扩展书的数据格式和核心书还不一样。最终从几千个 HTML 文件中提取出了一千多条法术和数百个怪物，导入 SQLite 后用 FTS5 建了全文索引，查询速度毫秒级。</p>
+
+                <h2>聊聊安全设计</h2>
+                <p>因为是面向公网的服务，安全方面下了不少功夫。API 层面有三层防护：IP 级别的速率限制（用 slowapi 实现，不同端点有不同的限速策略）、Token 认证（会话令牌绑定 IP，防止令牌泄露后被冒用）、以及输入校验（防止注入和恶意 payload）。最外层还有一个渐进封禁机制——某个 IP 频繁触发安全规则的话，封禁时间会指数级递增。</p>
+
+                <h2>一些细节</h2>
+                <p>骰子模块支持完整的 D&D 骰子表达式：<code>d20</code>、<code>4d6k3</code>（4d6 取最高的 3 个，经典的车卡掷法）、<code>2d20+5</code>（带调整值）、甚至支持优势/劣势的 <code>adv</code> 和 <code>dis</code> 标记。</p>
+                <p>角色构建是我最喜欢的功能。你说一句"车一个 5 级邪术师"，它会自动列出推荐的法术选择、魔能祈唤、属性分配和装备建议。这背后是从扩展书中提取的职业进程表，配合一些启发式的推荐逻辑。</p>
+                <p>前端故意没用任何框架——就三个文件，纯原生 JS + CSS。暗黑奇幻主题主要是为了氛围感，跑团嘛，界面也得有点地下城的味道。</p>
+
+                <h2>项目结构一览</h2>
+                <pre><code>dnd-agent/
+├── backend/           # FastAPI 后端（agent、db、dice、security）
+├── data_pipeline/     # CHM → HTML → JSON → SQLite 完整数据管线
+├── frontend/          # 单页 Web 前端（原生 JS，无框架）
+└── .env               # DeepSeek API Key 配置</code></pre>
+
+                <h2>跑起来</h2>
+                <p>环境只需要 Python 3.10+ 和一个 DeepSeek API Key：</p>
+                <pre><code>pip install fastapi uvicorn slowapi openai python-dotenv beautifulsoup4 lxml
+# 构建数据库
+python data_pipeline/extractor.py && python data_pipeline/to_sqlite.py
+# 启动
+uvicorn backend.main:app --host 0.0.0.0 --port 8765</code></pre>
+                <p>打开浏览器访问 <code>localhost:8765</code>，一个会说中文的 D&D 法师就上线了。</p>
+
+                <h2>后续想法</h2>
+                <p>目前数据覆盖了核心规则书和部分扩展，后面打算加入更多的扩展内容（范·里希腾的怪物指南、塔莎的万象坩埚等）。还想加一个"遭遇构建器"——根据队伍等级和人数，自动推荐合适的怪物组合。以及多人模式下的实时共享骰子结果，这个需要 WebSocket。</p>
+                <p>如果有同好对 D&D + AI 这个方向感兴趣，欢迎交流。代码是开源的，供学习参考，D&D 内容版权归威世智所有。</p>
+            </div>
+        </article>
+        <a class="back-link" href="../index.html#blog">← 返回冒险手记</a>
+    </div>
+    <script src="../js/particles.js"></script>
+
+    <!-- Floating Music Player -->
+    <div class="floating-player glass-card" id="floating-player">
+        <div class="floating-player__bar" id="floating-bar">
+            <span class="floating-player__icon" aria-hidden="true">🎵</span>
+            <span class="floating-player__track" id="fp-track-name">D&D 奇幻氛围音乐</span>
+            <button class="floating-player__play-btn" id="fp-btn-play" title="播放" aria-label="播放">
+                <svg viewBox="0 0 24 24" fill="currentColor" id="fp-icon-play"><path d="M8 5v14l11-7z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" id="fp-icon-pause" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+            <button class="floating-player__toggle" id="fp-toggle" title="展开" aria-label="展开播放器">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+        </div>
+        <div class="floating-player__panel" id="fp-panel" style="display:none;">
+            <div class="floating-player__controls">
+                <button class="music-player__btn" id="btn-prev" title="上一首" aria-label="上一首"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+                <button class="music-player__btn music-player__btn--play" id="btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor" id="icon-play"><path d="M8 5v14l11-7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" id="icon-pause" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></button>
+                <button class="music-player__btn" id="btn-next" title="下一首" aria-label="下一首"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+            </div>
+            <div class="floating-player__volume">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="music-player__volume-icon" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                <input type="range" class="music-player__volume-slider" id="volume-slider" min="0" max="100" value="40" aria-label="音量">
+            </div>
+            <span class="floating-player__track-full" id="track-name">D&D 奇幻氛围音乐</span>
+        </div>
+    </div>
+    <div id="youtube-player" style="display:none;"></div>
+
+    <script src="../js/music-player.js"></script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>五月读书小记 — 维尔德 Wilder</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,1 30,9 30,23 16,31 2,23 2,9' fill='none' stroke='%23c9a84c' stroke-width='1.5'/%3E%3Ctext x='16' y='20' text-anchor='middle' fill='%23c9a84c' font-size='12' font-family='serif'%3E20%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .blog-post { max-width: 760px; margin: 0 auto; padding: 2rem 0; }
+        .blog-post__header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--glass-border); }
+        .blog-post__date { color: var(--parchment-dim); font-family: 'Cinzel', serif; font-size: var(--text-sm); }
+        .blog-post__title { font-family: 'Cinzel', serif; font-size: var(--text-2xl); color: var(--gold-light); margin: 0.5rem 0; }
+        .blog-post__tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+        .blog-post__intro { color: var(--parchment-dim); font-style: italic; text-align: center; margin-bottom: 2.5rem; font-size: var(--text-base); line-height: 1.8; }
+        .back-link { display: inline-block; margin: 2rem 0 1rem; color: var(--gold-primary); font-family: 'Cinzel', serif; font-size: var(--text-sm); }
+        .back-link:hover { color: var(--gold-light); }
+
+        /* Book card */
+        .book-card { display: flex; gap: 1.5rem; margin-bottom: 2.5rem; padding: 1.5rem; background: rgba(18,18,26,0.5); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); transition: border-color 0.35s ease, box-shadow 0.35s ease; }
+        .book-card:hover { border-color: rgba(201,168,76,0.3); box-shadow: 0 4px 24px rgba(0,0,0,0.3), 0 0 16px rgba(201,168,76,0.06); }
+
+        .book-card__cover { flex-shrink: 0; width: 130px; height: 180px; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .book-card__cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .book-card__cover--fallback { display: flex; align-items: center; justify-content: center; text-align: center; padding: 1rem; font-family: 'Noto Serif SC', 'Cinzel', serif; font-weight: 700; font-size: 0.9rem; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.5); line-height: 1.4; }
+
+        .book-card__info { flex: 1; min-width: 0; }
+        .book-card__book-title { font-family: 'Noto Serif SC', 'Cinzel', serif; font-size: 1.15rem; font-weight: 700; color: var(--gold-light); margin-bottom: 0.2rem; }
+        .book-card__author { font-size: 0.85rem; color: var(--parchment-dim); margin-bottom: 0.85rem; }
+        .book-card__author::before { content: '作者：'; opacity: 0.6; }
+        .book-card__body { color: var(--parchment); font-size: 0.95rem; line-height: 1.8; }
+        .book-card__body p { margin-bottom: 0.6rem; }
+        .book-card__body p:last-child { margin-bottom: 0; }
+
+        /* Divider between books */
+        .book-divider { text-align: center; margin: 0.5rem 0 2rem; color: var(--gold-primary); opacity: 0.3; font-size: 1.2rem; }
+
+        @media (max-width: 540px) {
+            .book-card { flex-direction: column; align-items: center; }
+            .book-card__cover { width: 100px; height: 140px; }
+            .book-card__info { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <div class="container">
+        <a class="back-link" href="../index.html#blog">← 返回冒险手记</a>
+        <article class="blog-post">
+            <header class="blog-post__header">
+                <time class="blog-post__date">2026年05月31日</time>
+                <h1 class="blog-post__title">五月读书小记</h1>
+                <div class="blog-post__tags">
+                    <span class="tag">读书</span><span class="tag">话剧</span><span class="tag">历史</span><span class="tag">漫画</span>
+                </div>
+            </header>
+            <p class="blog-post__intro">
+                wild magic read
+            </p>
+
+            <!-- Book 1: 蒋公的面子 -->
+            <div class="book-card">
+                <div class="book-card__cover">
+                    <img src="../pictures/蒋工的面子.jpg" alt="蒋公的面子 封面"
+                         onerror="this.parentElement.innerHTML='<div class=\'book-card__cover--fallback\' style=\'background:linear-gradient(135deg,#3d1f1f,#6b2d2d,#3d1f1f);\'>蒋公<br>的面子</div>'">
+                </div>
+                <div class="book-card__info">
+                    <h2 class="book-card__book-title">《蒋公的面子》</h2>
+                    <p class="book-card__author">温方伊</p>
+                    <div class="book-card__body">
+                        <p>5 月 1 号去看了话剧，演出很精彩，好看得超出预期。评价为——更适合中国宝宝的《等待戈多》。</p>
+                        <p>作者的台词写得相当精妙，全场看下来没有一丝分神。故事讲的是 1943 年抗战时期，蒋介石设宴邀约三位国立中央大学的教授赴宴。三位主角各有各的动机和立场，各自推动或阻碍着自己是否要前去赴老蒋的宴。</p>
+                        <p>去了还是没去，这是一个问题。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 2: 献给阿尔吉侬的花束 -->
+            <div class="book-card">
+                <div class="book-card__cover">
+                    <img src="../pictures/献给阿尔吉侬的花束.jpg" alt="献给阿尔吉侬的花束 封面"
+                         onerror="this.parentElement.innerHTML='<div class=\'book-card__cover--fallback\' style=\'background:linear-gradient(135deg,#1a3a2a,#2d6b4f,#1a3a2a);\'>献给<br>阿尔吉侬<br>的花束</div>'">
+                </div>
+                <div class="book-card__info">
+                    <h2 class="book-card__book-title">《献给阿尔吉侬的花束》</h2>
+                    <p class="book-card__author">丹尼尔·凯斯（美）</p>
+                    <div class="book-card__body">
+                        <p>讲述一位智力障碍者查理接受智力治疗后发生的故事，采用日记体形式。他的智商从懵懂无知飞速飙升为远超常人的天才。而我喜欢作者所描述的查理经历的"成长的烦恼"——那种把过去的经历在某个时间点突然闪回，作为思考的资料进行反刍，后知后觉地意识到自己当时遇到了什么的感觉。</p>
+                        <p>作者的细节处理相当到位。查理的日记从错别字连篇的记录，逐渐变得逻辑缜密、文字深刻，就像在读一本真实的日记。每每读到查理在日记上的思考，我都深有同感。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 3: 明末农民战争史 -->
+            <div class="book-card">
+                <div class="book-card__cover">
+                    <img src="../pictures/明末农民战争史.jpg" alt="明末农民战争史 封面"
+                         onerror="this.parentElement.innerHTML='<div class=\'book-card__cover--fallback\' style=\'background:linear-gradient(135deg,#3d2d1a,#6b4e2d,#3d2d1a);\'>明末<br>农民<br>战争史</div>'">
+                </div>
+                <div class="book-card__info">
+                    <h2 class="book-card__book-title">《明末农民战争史》</h2>
+                    <p class="book-card__author">顾诚</p>
+                    <div class="book-card__body">
+                        <p>顾诚先生的史料一向详实，考据严谨，时间线梳理得相当完整。从天启七年到崇祯十七年的明末农民起义始末，读起来相当有意思。在玩《历史模拟器：崇祯》的时候，看着历史剧情在手上重演，很难绷得住。</p>
+                        <p>不过有一点想吐槽——作者偏向于一边倒站起义方的视角叙事，同时大量套用基于现代革命思想的理论术语来解读这场底层起义。我觉得没必要套用这么多术语来描述一个不曾受过革命纲领与思想启蒙的反抗。人生存的本能萌发的动力，并不比受系统思想指导的革命动力卑微。在当时有当时的生产关系与社会环境，分析历史应该从各阶级各类人群的详细动机出发，而不是一个笼统的"反动的"就能概括。尊重对手也是尊重自己。</p>
+                        <p>总的来说是一本很有意思的书，看完了可以接续《南明史》。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 4: 守望者（上） -->
+            <div class="book-card">
+                <div class="book-card__cover">
+                    <img src="../pictures/守望者.jpg" alt="守望者（上） 封面"
+                         onerror="this.parentElement.innerHTML='<div class=\'book-card__cover--fallback\' style=\'background:linear-gradient(135deg,#1a1a2e,#2d2d6b,#1a1a2e);\'>守望者<br>Watchmen<br>（上）</div>'">
+                </div>
+                <div class="book-card__info">
+                    <h2 class="book-card__book-title">《守望者（上）》</h2>
+                    <p class="book-card__author">阿兰·摩尔（英）</p>
+                    <div class="book-card__body">
+                        <p>故事讲述独行义警罗夏察觉有人在猎杀昔日守望者成员，遂逐一联络隐退的过去的同伴。</p>
+                        <p>严肃题材的超英反思漫画，比同类的《黑袍纠察队》更严肃一点。同样展现出超英也有普通人的爱恨情仇、自私怯懦——能力越大，欲望越大。人的底色是孤独，哪怕是无所不能的曼哈顿博士。没有人可以承担得起"偶像"二字。撕开靓丽的伪装，每个人都在渴望。</p>
+                    </div>
+                </div>
+            </div>
+
+        </article>
+        <a class="back-link" href="../index.html#blog">← 返回冒险手记</a>
+    </div>
+    <script src="../js/particles.js"></script>
+
+    <!-- Floating Music Player -->
+    <div class="floating-player glass-card" id="floating-player">
+        <div class="floating-player__bar" id="floating-bar">
+            <span class="floating-player__icon" aria-hidden="true">🎵</span>
+            <span class="floating-player__track" id="fp-track-name">D&D 奇幻氛围音乐</span>
+            <button class="floating-player__play-btn" id="fp-btn-play" title="播放" aria-label="播放">
+                <svg viewBox="0 0 24 24" fill="currentColor" id="fp-icon-play"><path d="M8 5v14l11-7z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" id="fp-icon-pause" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+            <button class="floating-player__toggle" id="fp-toggle" title="展开" aria-label="展开播放器">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+        </div>
+        <div class="floating-player__panel" id="fp-panel" style="display:none;">
+            <div class="floating-player__controls">
+                <button class="music-player__btn" id="btn-prev" title="上一首" aria-label="上一首"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+                <button class="music-player__btn music-player__btn--play" id="btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor" id="icon-play"><path d="M8 5v14l11-7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" id="icon-pause" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></button>
+                <button class="music-player__btn" id="btn-next" title="下一首" aria-label="下一首"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+            </div>
+            <div class="floating-player__volume">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="music-player__volume-icon" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                <input type="range" class="music-player__volume-slider" id="volume-slider" min="0" max="100" value="40" aria-label="音量">
+            </div>
+            <span class="floating-player__track-full" id="track-name">D&D 奇幻氛围音乐</span>
+        </div>
+    </div>
+    <div id="youtube-player" style="display:none;"></div>
+
+    <script src="../js/music-player.js"></script>
+</body>
+</html>

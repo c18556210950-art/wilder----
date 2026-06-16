@@ -1,0 +1,9 @@
+serverAddr = "106.14.80.115"
+serverPort = 7000
+auth.token = "12345678"
+
+[[proxies]]
+name = "web80"
+type = "tcp"
+localPort = 8080
+remotePort = 16000
